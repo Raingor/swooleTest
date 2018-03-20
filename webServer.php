@@ -15,7 +15,16 @@ $server->on('open', function($server,$request){
     }
 });
 $server->on('message',function($server,$frame){
-    echo "receive from {$frame->fd}:{$frame->data},opcode:{$frame->opcode},fin:{$frame->finish}\n";
+    // echo "receive from {$frame->fd}:{$frame->data},opcode:{$frame->opcode},fin:{$frame->finish}\n";
+    $fromId = $frame->fd;
+    $msg = $frame->data;
+    foreach ($server->connections as $fd) {
+        # code...
+        $toUser = $fd->fd;
+        if($toUser!=$fromId){
+            $server->push($toUser,$fromId."用户说了:".$msg);
+        }
+    }
 });
 
 $server->on('close',function($ser,$fd){
