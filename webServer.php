@@ -13,7 +13,7 @@ $server->on('message',function($server,$frame){
 });
 
 $server->on('close',function($ser,$fd){
-    echo "客户端 {$fd} 已关闭"；
+    echo "客户端 {$fd} 已关闭";
 });
 
 $server->start();
