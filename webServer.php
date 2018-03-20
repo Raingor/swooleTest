@@ -8,7 +8,10 @@ $server->on('open', function($server,$request){
     echo "server: 成功握手==".$request->fd."\n";
        $server->push($request->fd, "当前在线人数：".count($server->connections));
     foreach ($server->connections as $fd) {
-        $server->push($request->fd,'用户:'.$fd);
+        $uid = $request->fd;
+        if($uid!=$fd){
+            $server->push($fd,"用户：$uid 上线啦！！！！");
+        }
     }
 });
 $server->on('message',function($server,$frame){
