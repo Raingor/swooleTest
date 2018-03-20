@@ -6,7 +6,7 @@ $server = new swoole_websocket_server($host,$port);
 
 $server->on('open', function($server,$request){
     echo "server: 成功握手==".$request->fd."\n";
-    echo "当前在线人数：".count($server->connections))."\n";
+    echo "当前在线人数：".count($server->connections)."\n";
     foreach ($server->connections as $fd) {
         echo "'用户:'.$fd\n";
     }
