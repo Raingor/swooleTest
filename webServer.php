@@ -22,6 +22,8 @@ $server->on('message',function($server,$frame){
         # code...
         if($toUser!=$fromId){
             $server->push($toUser,$fromId."用户说了:".$msg);
+        }else{
+            $server->push($fromId,"我说：".$msg);
         }
     }
 });
