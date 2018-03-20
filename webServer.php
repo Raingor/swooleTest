@@ -10,6 +10,9 @@ $server->on('open', function($server,$request){
 $server->on('message',function($server,$frame){
     echo "receive from {$frame->fd}:{$frame->data},opcode:{$frame->opcode},fin:{$frame->finish}\n";
     $server->push($frame->fd, "当前在线人数：".count($server->connections));
+    foreach ($server->connections as $fd) {
+        $server->push($frame->fd,'用户:'.$fd);
+    }
 });
 
 $server->on('close',function($ser,$fd){
