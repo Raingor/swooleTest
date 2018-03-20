@@ -18,9 +18,8 @@ $server->on('message',function($server,$frame){
     // echo "receive from {$frame->fd}:{$frame->data},opcode:{$frame->opcode},fin:{$frame->finish}\n";
     $fromId = $frame->fd;
     $msg = $frame->data;
-    foreach ($server->connections as $fd) {
+    foreach ($server->connections as $toUser) {
         # code...
-        $toUser = $fd->fd;
         if($toUser!=$fromId){
             $server->push($toUser,$fromId."用户说了:".$msg);
         }
