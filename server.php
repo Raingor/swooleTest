@@ -23,6 +23,14 @@ $server->on('open',function($server,$fd){
 $server->on('message',function($server,$fd){
     $fromUser = $fd->fd;
    $content = $fd->data;
+    foreach ($server->connections as $toUser) {
+        # code...
+        if($toUser!=$fromUser){
+            $server->push($toUser,$fromUser."用户说了:".$msg);
+        }else{
+            $server->push($fromUser,"我说：".$content);
+        }
+    }
 });
 
 /**
