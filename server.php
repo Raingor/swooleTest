@@ -10,6 +10,7 @@ $server = new swoole_websocket_server($host,$port);
 require_once('common.php');
 
 $server->on('open',function($server,$fd){
+    $fromUser = $fd->fd;
     echo "成功握手======".$fromUser."\n";
 });
 
