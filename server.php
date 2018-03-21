@@ -13,8 +13,13 @@ $server->on('open',function($server,$fd){
     $fromUser = $fd->fd;
     echo "成功握手======".$fromUser."\n";
     $server->push($fromUser,"成功握手");
-    getCurrentUser($server,$fromUser);
-   noticeUp($server,$fromUser);
+    foreach ($server->connections as $user) {
+        $userid.="$user,";
+    }
+    $server->push($fromUser,"当前用户列表".$userid);
+    foreach ($server->connections as $toUser) {
+        $server->push($toUser,"用户".$fromUser."已上线");
+    }
 });
 
 /**
@@ -39,7 +44,10 @@ $server->on('close',function($server,$fd){
     $fromUser = $fd->fd;
     echo $fromUser."已断开连接\n";
     $server->push($fromUser,"已和服务器断开连接");
-    noticeDown($server,$fromUser);
+    foreach ($server->connections as $toUser) {
+        assert($fromUser!=$toUser);
+        $server->push($toUser,$fromUser."已下线");
+    }
 });
 
 
