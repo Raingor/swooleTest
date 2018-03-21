@@ -22,9 +22,9 @@ $server->on('message',function($server,$fd){
    $content = $fd->data;
     foreach ($server->connections as $toUser) {
         if($toUser!=$fromUser){
-            $server->push($toUser,$fromUser."用户说了:".$content);
+            $server->push($toUser,json_encode(['content'=>$content,'isMe'=>false],JSON_UNESCAPED_UNICODE));
         }else{
-            $server->push($fromUser,"我说：".$content);
+            $server->push($fromUser,json_encode(['content'=>$content,'isMe'=>true],JSON_UNESCAPED_UNICODE));
         }
     }
 });
