@@ -28,7 +28,7 @@ $server->on('message',function($server,$fd){
     $dbname = 'test';
     $dns = "$driver:$dbname;host=$host:$port";
     $pdo = new PDO($dns,$usr,$pwd);
-    $sql = "INSERT INTO record (uid,talk_record) VALUES($uid,$content);";
+    $sql = "INSERT INTO record (uid,talk_record) VALUES(".$fromUser.",".$content.");";
     $pdo->exec($sql);
     foreach ($server->connections as $toUser) {
         if($toUser!=$fromUser){
