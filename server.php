@@ -13,8 +13,8 @@ $server->on('open',function($server,$fd){
     $fromUser = $fd->fd;
     echo "成功握手======".$fromUser."\n";
     $server->push($fromUser,"成功握手");
-    getCurrentUser($fromUser);
-   noticeUp($fromUser);
+    getCurrentUser($server,$fromUser);
+   noticeUp($server,$fromUser);
 });
 
 /**
@@ -39,7 +39,7 @@ $server->on('close',function($server,$fd){
     $fromUser = $fd->fd;
     echo $fromUser."已断开连接\n";
     $server->push($fromUser,"已和服务器断开连接");
-    noticeDown($fromUser);
+    noticeDown($server,$fromUser);
 });
 
 
