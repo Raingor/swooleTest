@@ -12,6 +12,6 @@ function getConnection(){
     $usr = 'rong';
     $pwd = 'rong123';
     $dbname = 'test';
-    $dns = "$dirver:$dbname;host=$host:$port";
+    $dns = "$driver:$dbname;host=$host:$port";
     return new PDO($dns,$usr,$pwd);
 }
