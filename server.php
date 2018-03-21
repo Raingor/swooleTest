@@ -20,16 +20,7 @@ $server->on('open',function($server,$fd){
 $server->on('message',function($server,$fd){
     $fromUser = $fd->fd;
    $content = $fd->data;
-   $driver = 'mysql';
-    $host = 'localhost';
-    $port = 3306;
-    $usr = 'rong';
-    $pwd = 'rong123';
-    $dbname = 'test';
-    $dns = "$driver:$dbname;host=$host:$port";
-    $pdo = new PDO($dns,$usr,$pwd);
-    $sql = "INSERT INTO record (uid,talk_record) VALUES(".$fromUser.",".$content.");";
-    $pdo->exec($sql);
+//    saveRecord($content,$fromUser);
     foreach ($server->connections as $toUser) {
         if($toUser!=$fromUser){
             $server->push($toUser,json_encode(['content'=>$content,'isMe'=>false],JSON_UNESCAPED_UNICODE));
