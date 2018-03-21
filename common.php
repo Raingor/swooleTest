@@ -1,6 +1,6 @@
 <?php
 function saveRecord($content,$uid){
-    $sql = "INSERT INTO record (uid,talk_record) VALUES($uid,$content)";
+    $sql = "INSERT INTO record (uid,talk_record) VALUES($uid,$content);";
     $pdo = getConnection();
     $row = $pdo->exec($sql);
 }
@@ -13,5 +13,5 @@ function getConnection(){
     $pwd = 'rong123';
     $dbname = 'test';
     $dns = "$driver:$dbname;host=$host:$port";
-    return new PDO($dns,$usr,$pwd);
+    $pdo = new PDO($dns,$usr,$pwd);
 }
