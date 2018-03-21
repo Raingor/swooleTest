@@ -7,7 +7,7 @@ $port = 9501;
  * 创建websocket的 服务
  */
 $server = new swoole_websocket_server($host,$port);
-
+require_once('common.php');
 
 $server->on('open',function($server,$fd){
     $fromUser = $fd->fd;
@@ -24,9 +24,8 @@ $server->on('message',function($server,$fd){
     $fromUser = $fd->fd;
    $content = $fd->data;
     foreach ($server->connections as $toUser) {
-        # code...
         if($toUser!=$fromUser){
-            $server->push($toUser,$fromUser."用户说了:".$msg);
+            $server->push($toUser,$fromUser."用户说了:".$content);
         }else{
             $server->push($fromUser,"我说：".$content);
         }
@@ -42,36 +41,6 @@ $server->on('close',function($server,$fd){
     $server->push($fromUser,"已和服务器断开连接");
     noticeDown($fromUser);
 });
-
-/**
- * 通知上线
- */
-function noticeUp($fromUser){
-    foreach ($server->connections as $toUser) {
-        $server->push($toUser,"用户".$fromUser."已上线");
-    }
-}
-/**
- * 通知下线
- */
-function noticeDown($fromUser){
-foreach ($server->connections as $toUser) {
-        assert($fromUser!=$toUser);
-        $server->push($toUser,$fromUser."已下线");
-    }
-
-}
-
-
-/**
- * 获取当前用户列表
- */
-function getCurrentUser(){
-    foreach ($server->connections as $user) {
-        $userid.="$user,";
-    }
-    $server->push($user,"当前用户列表".$userid);
-}
 
 
 $server->start();
