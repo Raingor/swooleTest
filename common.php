@@ -1,8 +1,15 @@
 <?php
 function saveRecord($content,$uid){
+    $driver = 'mysql';
+    $host = 'localhost';
+    $port = 3306;
+    $usr = 'rong';
+    $pwd = 'rong123';
+    $dbname = 'test';
+    $dns = "$driver:$dbname;host=$host:$port";
+    $pdo = new PDO($dns,$usr,$pwd);
     $sql = "INSERT INTO record (uid,talk_record) VALUES($uid,$content);";
-    $pdo = getConnection();
-    $row = $pdo->exec($sql);
+    $pdo->exec($sql);
 }
 
 function getConnection(){
@@ -14,4 +21,5 @@ function getConnection(){
     $dbname = 'test';
     $dns = "$driver:$dbname;host=$host:$port";
     $pdo = new PDO($dns,$usr,$pwd);
+    return $pdo;
 }
