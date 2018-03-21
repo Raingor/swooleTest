@@ -41,12 +41,11 @@ $server->on('message',function($server,$fd){
  * 当用户和服务断开时
  */
 $server->on('close',function($server,$fd){
-    $fromUser = $fd->fd;
-    echo $fromUser."已断开连接\n";
-    $server->push($fromUser,"已和服务器断开连接");
+    echo $fd."已断开连接\n";
+    $server->push($fd,"已和服务器断开连接");
     foreach ($server->connections as $toUser) {
-        assert($fromUser!=$toUser);
-        $server->push($toUser,$fromUser."已下线");
+        assert($fd!=$toUser);
+        $server->push($toUser,$fd."已下线");
     }
 });
 
