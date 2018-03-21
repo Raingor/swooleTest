@@ -20,6 +20,7 @@ $server->on('open',function($server,$fd){
 $server->on('message',function($server,$fd){
     $fromUser = $fd->fd;
    $content = $fd->data;
+   saveRecord($content,$fromUser);
     foreach ($server->connections as $toUser) {
         if($toUser!=$fromUser){
             $server->push($toUser,json_encode(['content'=>$content,'isMe'=>false],JSON_UNESCAPED_UNICODE));
