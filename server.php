@@ -13,7 +13,7 @@ $server->on('open',function($server,$fd){
     $fromUser = $fd->fd;
     echo "成功握手======".$fromUser."\n";
     $server->push($fromUser,"成功握手");
-    getCurrentUser();
+    getCurrentUser($fromUser);
    noticeUp($fromUser);
 });
 

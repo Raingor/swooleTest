@@ -22,9 +22,9 @@ foreach ($server->connections as $toUser) {
 /**
  * 获取当前用户列表
  */
-function getCurrentUser(){
+function getCurrentUser($fromUser){
     foreach ($server->connections as $user) {
         $userid.="$user,";
     }
-    $server->push($user,"当前用户列表".$userid);
+    $server->push($fromUser,"当前用户列表".$userid);
 }
